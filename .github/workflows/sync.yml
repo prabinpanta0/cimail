@@ -1,0 +1,20 @@
+name: mail-sync
+
+on:
+    schedule:
+        # every 10 minutes
+        - cron: "*/10 * * * *"
+    workflow_dispatch: {}
+
+jobs:
+    sync:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Call sync endpoint
+              env:
+                  MAIL_APP_URL: ${{ secrets.MAIL_APP_URL }}
+                  SYNC_SECRET: ${{ secrets.SYNC_SECRET }}
+              run: |
+                  if [ -z "$MAIL_APP_URL" ]; then echo "Missing MAIL_APP_URL secret"; exit 1; fi
+                  if [ -z "$SYNC_SECRET" ]; then echo "Missing SYNC_SECRET secret"; exit 1; fi
+                  curl -fsS "$MAIL_APP_URL/api/sync" -H "x-sync-secret: $SYNC_SECRET"

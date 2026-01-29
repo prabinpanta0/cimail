@@ -1,0 +1,22 @@
+name = "mail-email-worker"
+main = "src/worker.js"
+compatibility_date = "2026-01-28"
+
+# Deploy this worker, then bind it to Email Routing addresses in Cloudflare:
+# Email Routing -> Email Workers -> Create/Select worker -> Bind to routes
+
+[vars]
+# Where to POST inbound RFC822 emails into your SvelteKit app
+APP_INGEST_URL = "https://mail.domain.com/api/inbound/email"
+
+# Shared secret checked by the app endpoint
+APP_INGEST_SECRET = "change-me"
+
+# Your domain addresses
+MAIL_ME_ADDRESS = "me@domain.com"
+MAIL_NOREPLY_ADDRESS = "noreply@domain.com"
+
+# Verified destination for forwarding
+GMAIL_FORWARD_TO = "your@gmail.com"
+
+
